@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jihyeon Han — Film & Media</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --bg2: #f4f3ef;
+      --white: #ffffff;
+      --border: #e8e6e0;
+      --border2: #d4d1c8;
+      --text: #1a1916;
+      --muted: #7a7872;
+      --light: #b0ada5;
+      --accent: #2b5c3e;
+      --accent-light: #e8f0eb;
+      --accent2: #8b4a2f;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 64px;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    nav.scrolled { border-bottom-color: var(--border); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 44px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 64px 80px;
+      gap: 80px;
+    }
+
+    .hero-left { padding-top: 20px; }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 6vw, 84px);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.35s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--muted);
+      display: block;
+    }
+
+    .hero-tagline {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 400px;
+      line-height: 1.85;
+      margin-bottom: 48px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.65s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 32px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border2);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    /* Hero right — decorative card stack */
+    .hero-right {
+      opacity: 0;
+      animation: fadeIn 1s 0.7s forwards;
+      position: relative;
+      height: 420px;
+    }
+
+    .hero-card {
+      position: absolute;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 28px 32px;
+    }
+
+    .hero-card-1 {
+      top: 0; right: 0;
+      width: 280px;
+      transform: rotate(2deg);
+    }
+
+    .hero-card-2 {
+      top: 80px; right: 60px;
+      width: 240px;
+      transform: rotate(-1.5deg);
+      background: var(--bg2);
+    }
+
+    .hero-card-3 {
+      top: 200px; right: 20px;
+      width: 220px;
+      transform: rotate(1deg);
+    }
+
+    .card-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .card-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--light);
+      margin-top: 6px;
+    }
+
+    /* SECTIONS */
+    section { padding: 120px 64px; position: relative; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 4.5vw, 58px);
+      font-weight: 400;
+      line-height: 1.08;
+      margin-bottom: 64px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    /* ABOUT */
+    #about { background: var(--white); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      gap: 100px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .about-text p:first-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      color: var(--text);
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .about-sidebar { display: flex; flex-direction: column; gap: 0; }
+
+    .info-block {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-block:first-child { border-top: 1px solid var(--border); }
+
+    .info-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+
+    .project-card {
+      background: var(--white);
+      padding: 48px 44px;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .project-card:hover { background: var(--bg2); }
+
+    .project-num {
+      font-size: 11px;
+      color: var(--light);
+      letter-spacing: 0.1em;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 5px 11px;
+      border-radius: 2px;
+    }
+
+    .tag.warm {
+      color: var(--accent2);
+      background: #f4ece7;
+    }
+
+    .tag.neutral {
+      color: var(--muted);
+      background: var(--bg2);
+    }
+
+    /* SKILLS */
+    #skills { background: var(--white); }
+
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+    }
+
+    .skill-cat-title {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-name {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .skill-bar-wrap {
+      width: 100px;
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+    }
+
+    .skill-bar {
+      height: 100%;
+      border-radius: 1px;
+      background: var(--text);
+    }
+
+    .skill-category { margin-bottom: 48px; }
+
+    .skills-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .aside-quote {
+      padding: 32px 36px;
+      background: var(--bg2);
+      border-left: 2px solid var(--text);
+    }
+
+    .aside-quote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .aside-quote cite {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--light);
+    }
+
+    .lang-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .lang-level {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--text);
+      color: var(--bg);
+      padding: 140px 64px;
+      text-align: center;
+    }
+
+    #contact .section-label { color: rgba(255,255,255,0.4); }
+    #contact .section-title { color: var(--bg); margin-bottom: 24px; }
+    #contact .section-title em { color: rgba(255,255,255,0.45); }
+
+    .contact-subtext {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      max-width: 480px;
+      margin: 0 auto 56px;
+      font-weight: 300;
+      line-height: 1.85;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+
+    .contact-link:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    .btn-white {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .btn-white:hover {
+      background: #fffff0;
+      transform: translateY(-1px);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 28px 64px;
+      background: var(--text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255,255,255,0.25);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* DIVIDERS */
+    hr.section-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 64px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      nav { padding: 20px 28px; }
+      #hero { grid-template-columns: 1fr; padding: 100px 28px 80px; gap: 60px; min-height: auto; }
+      .hero-right { display: none; }
+      section { padding: 80px 28px; }
+      .about-grid { grid-template-columns: 1fr; gap: 52px; }
+      .skills-layout { grid-template-columns: 1fr; gap: 0; }
+      footer { padding: 28px; flex-direction: column; gap: 8px; text-align: center; }
+      #contact { padding: 80px 28px; }
+      hr.section-rule { margin: 0 28px; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-name { font-size: 48px; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">Jihyeon Han</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Film & Media · SKKU</div>
+      <h1 class="hero-name">
+        Jihyeon<br>
+        <em>Han</em>
+      </h1>
+      <p class="hero-tagline">
+        Exploring the intersection of storytelling, data, and visual culture — one frame at a time.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Work</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card hero-card-1">
+        <div class="card-label">Currently studying</div>
+        <div class="card-value">Film & Media<br>Studies</div>
+        <div class="card-sub">Sungkyunkwan University</div>
+      </div>
+      <div class="hero-card hero-card-2">
+        <div class="card-label">Based in</div>
+        <div class="card-value">Seoul,<br>South Korea</div>
+      </div>
+      <div class="hero-card hero-card-3">
+        <div class="card-label">Focus</div>
+        <div class="card-value">Visual Storytelling</div>
+        <div class="card-sub">Data · Media · Cinema</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-rule" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">01 — About</div>
+    <h2 class="section-title">A story<br>in <em>progress</em></h2>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm Jihyeon Han, a Film and Media student at Sungkyunkwan University with a deep passion for the ways moving images shape how we understand the world around us.</p>
+        <p>My academic and creative work sits at the crossroads of cinema, digital media, and data storytelling — examining how culture flows through screens, both big and small.</p>
+        <p>Whether analyzing a frame composition or building an interactive dashboard, I believe the best stories are ones that invite the audience to look closer.</p>
+      </div>
+      <div class="about-sidebar reveal">
+        <div class="info-block">
+          <div class="info-label">University</div>
+          <div class="info-value">Sungkyunkwan University (SKKU)</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Major</div>
+          <div class="info-value">Film &amp; Media Studies</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Location</div>
+          <div class="info-value">Seoul, South Korea</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Focus Areas</div>
+          <div class="info-value">Visual Storytelling · Data Viz · Media Analysis</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Currently</div>
+          <div class="info-value">Open to collaborations &amp; opportunities</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-rule" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">02 — Work</div>
+    <h2 class="section-title">Selected<br><em>Projects</em></h2>
+
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <h3 class="project-title">Spotify Listening Stats Dashboard</h3>
+        <p class="project-desc">
+          An interactive data visualization dashboard that surfaces personal listening patterns, genre trends, and mood-based listening habits drawn from Spotify's API — turning raw play history into a visual portrait of taste.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Data Viz</span>
+          <span class="tag warm">Spotify API</span>
+          <span class="tag neutral">JavaScript</span>
+          <span class="tag">UI Design</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="opacity:0.4; pointer-events:none;">
+        <div class="project-num">02</div>
+        <h3 class="project-title" style="color:var(--muted);">Next Project</h3>
+        <p class="project-desc">More work in progress — coming soon.</p>
+        <div class="project-tags"><span class="tag neutral">TBD</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-rule" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">03 — Skills</div>
+    <h2 class="section-title">Tools &amp;<br><em>Craft</em></h2>
+
+    <div class="skills-layout">
+      <div>
+        <div class="skill-category reveal">
+          <div class="skill-cat-title">Media &amp; Production</div>
+          <div class="skill-item"><span class="skill-name">Film Analysis &amp; Theory</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Video Editing (Premiere, DaVinci)</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Screenplay &amp; Script Writing</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Photography &amp; Visual Composition</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div></div>
+        </div>
+        <div class="skill-category reveal">
+          <div class="skill-cat-title">Digital &amp; Data</div>
+          <div class="skill-item"><span class="skill-name">Data Visualization</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">HTML / CSS / JavaScript</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:68%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Python (data analysis)</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+          <div class="skill-item"><span class="skill-name">Figma &amp; UI Prototyping</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="skills-aside reveal">
+        <div class="aside-quote">
+          <p>"Cinema is a matter of what's in the frame and what's out."</p>
+          <cite>— Martin Scorsese</cite>
+        </div>
+
+        <div>
+          <div class="skill-cat-title">Languages</div>
+          <div class="lang-item"><span>Korean</span><span class="lang-level">Native</span></div>
+          <div class="lang-item"><span>English</span><span class="lang-level">Proficient</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">04 — Contact</div>
+    <h2 class="section-title reveal">Let's<br><em>Connect</em></h2>
+    <p class="contact-subtext reveal">Whether you have a project in mind, want to collaborate on something creative, or just want to talk about film — my inbox is always open.</p>
+
+    <div class="contact-links reveal">
+      <a href="mailto:han030305@g.skku.edu" class="contact-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email
+      </a>
+      <a href="https://github.com" target="_blank" class="contact-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://instagram.com" target="_blank" class="contact-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+    </div>
+
+    <a href="mailto:han030305@g.skku.edu" class="btn btn-white reveal">Say Hello →</a>
+  </section>
+
+  <footer>
+    <span>© 2025 Jihyeon Han</span>
+    <span>Film &amp; Media · SKKU · Seoul</span>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('visible');
+          observer.unobserve(el.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 4) * 70}ms`;
+      observer.observe(el);
+    });
+
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+</body>
+</html>
